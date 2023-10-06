@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 import ru.erp.teachmeskills.pages.LoginPage;
 import ru.erp.teachmeskills.pages.StudentPage;
 
+
+
 import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -48,4 +50,6 @@ public class LogInTest extends BaseTest {
             assertTrue(studentPage.isPageOpened(), "ОШИБКА: Страница не загружена");
         });
     }
+
+
 }

@@ -8,25 +8,22 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class LoginPage extends BasePage {
-    private final SelenideElement emailInput = $("[name=email]"),
-                                  passwordInput = $("[name=password]"),
-                                  logInButton = $(byText("Войти в систему")),
-                                  authForm = $("form");
+    private final SelenideElement authForm = $("form");
 
     public void openLoginPage() {
         open("/login");
     }
 
     public void setEmailValue(String email) {
-        emailInput.setValue(email);
+        input.setValueInInput("Введите Email",email);
     }
 
     public void setPasswordValue(String pass) {
-        passwordInput.setValue(pass);
+        input.setValueInInput("Введите пароль",pass);;
     }
 
     public void clickLogInButton() {
-        logInButton.click();
+        button.clickButton("Войти в систему");
     }
 
     @Override
