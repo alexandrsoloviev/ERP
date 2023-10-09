@@ -1,24 +1,15 @@
 package ru.erp.teachmeskills.tests;
 
-import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import ru.erp.teachmeskills.config.Project;
-import ru.erp.teachmeskills.drivers.UIDriver;
-import ru.erp.teachmeskills.helpers.Attach;
-
-import java.util.Map;
-
-import static com.codeborne.selenide.Selenide.closeWebDriver;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static com.codeborne.selenide.logevents.SelenideLogger.addListener;
-import static org.openqa.selenium.remote.HttpSessionId.getSessionId;
-import static ru.erp.teachmeskills.helpers.Attach.*;
+import ru.erp.teachmeskills.drivers.DriverSettings;
+import ru.erp.teachmeskills.drivers.DriverUtils;
+import ru.erp.teachmeskills.helpers.AllureAttachments;
 
 public class BaseTest {
 
@@ -26,29 +17,28 @@ public class BaseTest {
     protected final String pass = System.getProperty("USER_PASS");                 //"Ulerp123";
 
     @BeforeAll
-    public static void setup() {
-        addListener("AllureSelenide", new AllureSelenide());
-        selectDriver();
+    static void beforeAll() {
+        DriverSettings.configure();
     }
 
-    private static void selectDriver() {
-        switch (Project.config.runIn()) {
-            case "browser_selenoid":
-            case "browser_local":
-                UIDriver.configure();
-                break;
-
-        }
+    @BeforeEach
+    public void beforeEach() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
-
-
 
     @AfterEach
-    @Step("Save artifacts and close webdriver")
     public void afterEach() {
-        screenshotAs("Last screenshot");
-        pageSource();
-        closeWebDriver();
+        String sessionId = DriverUtils.getSessionId();
+
+        AllureAttachments.addScreenshotAs("Last screenshot");
+        AllureAttachments.addPageSource();
+        AllureAttachments.addBrowserConsoleLogs();
+
+        Selenide.closeWebDriver();
+
+        if (Project.isVideoOn()) {
+            AllureAttachments.addVideo(sessionId);
+        }
     }
 
 
