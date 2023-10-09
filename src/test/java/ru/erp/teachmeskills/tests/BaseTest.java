@@ -2,15 +2,17 @@ package ru.erp.teachmeskills.tests;
 
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import ru.erp.teachmeskills.config.Project;
 import ru.erp.teachmeskills.drivers.DriverSettings;
 import ru.erp.teachmeskills.drivers.DriverUtils;
 import ru.erp.teachmeskills.helpers.AllureAttachments;
-
+@ExtendWith({AllureJunit5.class})
 public class BaseTest {
 
     protected final String email = System.getProperty("USER_EMAIL");   //"ul.erp@yopmail.com"
