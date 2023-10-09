@@ -16,8 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class LogInTest extends BaseTest {
     LoginPage loginPage = new LoginPage();
     StudentPage studentPage = new StudentPage();
-    private final String email = "ul.erp@yopmail.com";
-    private final String pass = "Ulerp123";
+
 
     @Test
     @Owner("alexandrsoloviev")

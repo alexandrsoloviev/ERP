@@ -22,6 +22,9 @@ import static ru.erp.teachmeskills.helpers.Attach.*;
 
 public class BaseTest {
 
+    protected final String email = System.getProperty("USER_EMAIL");   //"ul.erp@yopmail.com"
+    protected final String pass = System.getProperty("USER_PASS");                 //"Ulerp123";
+
     @BeforeAll
     public static void setup() {
         addListener("AllureSelenide", new AllureSelenide());
