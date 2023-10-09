@@ -7,14 +7,14 @@ public class Project {
     public static ProjectConfig config = ConfigFactory.create(ProjectConfig.class, System.getProperties());
 
     public static boolean isWebMobile() {
-        return !config.browserMobileView().isEmpty();
+        return !config.browserMobileView().equals("");
     }
 
     public static boolean isRemoteWebDriver() {
-        return !config.remoteDriverUrl().isEmpty();
+        return !config.remoteDriverUrl().equals("");
     }
 
     public static boolean isVideoOn() {
-        return !config.videoStorage().isEmpty();
+        return !config.videoStorage().equals("");
     }
 }
