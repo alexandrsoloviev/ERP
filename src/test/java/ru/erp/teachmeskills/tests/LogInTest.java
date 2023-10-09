@@ -9,6 +9,7 @@ import ru.erp.teachmeskills.pages.StudentPage;
 
 
 import static io.qameta.allure.Allure.step;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -26,7 +27,7 @@ public class LogInTest extends BaseTest {
             loginPage.openLoginPage();
         });
         step("Форма авторизации отображается", () -> {
-            assertTrue(loginPage.isPageOpened(), "ОШИБКА: Страница не загружена");
+           loginPage.isPageOpened();
         });
     }
 
@@ -47,7 +48,7 @@ public class LogInTest extends BaseTest {
             loginPage.clickLogInButton();
         });
         step("Администратор просматривает страницу студенты", () -> {
-            assertTrue(studentPage.isPageOpened(), "ОШИБКА: Страница не загружена");
+            studentPage.isPageOpened();
         });
     }
 

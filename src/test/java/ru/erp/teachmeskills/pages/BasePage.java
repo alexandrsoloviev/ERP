@@ -12,14 +12,7 @@ public abstract class BasePage {
     Input input = new Input();
     Button button = new Button();
 
-    public abstract boolean isPageOpened();
 
-    public boolean isExist(SelenideElement element) {
-        try {
-            element.shouldBe(visible);
-            return true;
-        } catch (ElementNotFound e) {
-            return false;
-        }
-    }
+
+
 }

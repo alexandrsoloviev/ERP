@@ -1,8 +1,11 @@
 package ru.erp.teachmeskills.pages;
 
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
+import static com.codeborne.selenide.Condition.appear;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -26,8 +29,9 @@ public class LoginPage extends BasePage {
         button.clickButton("Войти в систему");
     }
 
-    @Override
-    public boolean isPageOpened() {
-        return isExist(authForm);
+
+
+    public SelenideElement isPageOpened() {
+       return  $(authForm).shouldBe(visible);
     }
 }
