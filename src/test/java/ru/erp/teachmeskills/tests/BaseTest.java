@@ -1,47 +1,46 @@
 package ru.erp.teachmeskills.tests;
 
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.junit5.BrowserPerTestStrategyExtension;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 
-import org.openqa.selenium.remote.DesiredCapabilities;
-import ru.erp.teachmeskills.config.Project;
-import ru.erp.teachmeskills.helpers.AllureAttachments;
-import ru.erp.teachmeskills.helpers.DriverSettings;
-import ru.erp.teachmeskills.helpers.DriverUtils;
+import org.junit.jupiter.api.extension.ExtendWith;
+import ru.erp.teachmeskills.config.Browser;
+import ru.erp.teachmeskills.config.ConfigReader;
+import ru.erp.teachmeskills.config.ProjectConfiguration;
+import ru.erp.teachmeskills.config.WebConfig;
+import ru.erp.teachmeskills.helpers.Attach;
+@ExtendWith({BrowserPerTestStrategyExtension.class})
 
 public class BaseTest {
 
-    protected final String email = System.getProperty("USER_EMAIL");   //"ul.erp@yopmail.com"
-    protected final String pass = System.getProperty("USER_PASS");                 //"Ulerp123";
+    private static final WebConfig webConfig = ConfigReader.Instance.read();
+    private static ProjectConfiguration projectConfiguration = new ProjectConfiguration(webConfig);
 
     @BeforeAll
-    static void setUp() {
-        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-        DriverSettings.configure();
+    public static void setUp() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+        projectConfiguration.webConfig();
+        projectConfiguration.apiConfig();
     }
 
     @AfterEach
-    public void addAttachments() {
-        String sessionId = DriverUtils.getSessionId();
-
-        AllureAttachments.addScreenshotAs("Last screenshot");
-        AllureAttachments.addPageSource();
-//        AllureAttachments.attachNetwork(); // todo
-        AllureAttachments.addBrowserConsoleLogs();
-
-        Selenide.closeWebDriver();
-
-        if (Project.isVideoOn()) {
-            AllureAttachments.addVideo(sessionId);
+    void addAttachments() {
+        Attach.screenshotAs("Last screenshot");
+        Attach.pageSource();
+        if (Configuration.browser.equals(Browser.CHROME.name())) {
+            Attach.browserConsoleLogs();
+        }
+        if (projectConfiguration.isRemote()) {
+            Attach.addVideo(projectConfiguration.getVideoStorageUrl());
         }
     }
 
 
-    }
+}
 
 
 //    @BeforeAll
