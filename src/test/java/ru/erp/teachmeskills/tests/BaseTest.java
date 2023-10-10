@@ -3,43 +3,41 @@ package ru.erp.teachmeskills.tests;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.junit5.AllureJunit5;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
-import ru.erp.teachmeskills.config.WebDriverProvider;
+import ru.erp.teachmeskills.config.Project;
 import ru.erp.teachmeskills.helpers.AllureAttachments;
-@ExtendWith({AllureJunit5.class})
+import ru.erp.teachmeskills.helpers.DriverSettings;
+import ru.erp.teachmeskills.helpers.DriverUtils;
+
 public class BaseTest {
 
     protected final String email = System.getProperty("USER_EMAIL");   //"ul.erp@yopmail.com"
     protected final String pass = System.getProperty("USER_PASS");                 //"Ulerp123";
 
     @BeforeAll
-    static void configure() {
-        WebDriverProvider.configuration();
+    static void setUp() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("enableVNC", true);
-        capabilities.setCapability("enableVideo", true);
-        Configuration.browserCapabilities = capabilities;
+        DriverSettings.configure();
     }
 
     @AfterEach
-    void addAttachments() {
-        AllureAttachments.screenshotAs("Last screenshot");
-        AllureAttachments.pageSource();
-        AllureAttachments.browserConsoleLogs();
-        AllureAttachments.addVideo();
-    }
+    public void addAttachments() {
+        String sessionId = DriverUtils.getSessionId();
 
-    @AfterEach
-    void closeWebDriver() {
-        Selenide.closeWindow();
+        AllureAttachments.addScreenshotAs("Last screenshot");
+        AllureAttachments.addPageSource();
+//        AllureAttachments.attachNetwork(); // todo
+        AllureAttachments.addBrowserConsoleLogs();
+
         Selenide.closeWebDriver();
+
+        if (Project.isVideoOn()) {
+            AllureAttachments.addVideo(sessionId);
+        }
     }
 
 
