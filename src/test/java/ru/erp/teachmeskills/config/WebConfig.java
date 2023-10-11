@@ -15,23 +15,19 @@ public interface WebConfig extends Config {
     Browser browser();
 
     @Key("browserVersion")
-    @DefaultValue("106.0")
+    @DefaultValue("113.0")
     String browserVersion();
 
     @Key("browserSize")
     @DefaultValue("1920x1080")
     String browserSize();
 
-    @Key("baseUrl")
-    @DefaultValue("https://www.jetbrains.com/ru-ru/")
-    String baseUrl();
-
     @Key("isRemote")
     @DefaultValue("false")
     boolean isRemote();
 
     @Key("remoteUrl")
-    @DefaultValue("http://localhost:4444")
+    @DefaultValue("https://user1:1234@selenoid.autotests.cloud/wd/hub")
     String remoteUrl();
 
     @Key("videoStorage")

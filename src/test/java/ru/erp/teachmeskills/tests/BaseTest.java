@@ -12,6 +12,7 @@ import ru.erp.teachmeskills.config.Browser;
 import ru.erp.teachmeskills.config.ConfigReader;
 import ru.erp.teachmeskills.config.ProjectConfiguration;
 import ru.erp.teachmeskills.config.WebConfig;
+import ru.erp.teachmeskills.config.erp.App;
 import ru.erp.teachmeskills.helpers.Attach;
 @ExtendWith({BrowserPerTestStrategyExtension.class})
 
@@ -27,6 +28,12 @@ public class BaseTest {
         projectConfiguration.apiConfig();
     }
 
+    @BeforeAll
+    static void configureBaseUrl() {
+
+        Configuration.baseUrl = App.config.webUrl();
+    }
+
     @AfterEach
     void addAttachments() {
         Attach.screenshotAs("Last screenshot");
@@ -38,52 +45,5 @@ public class BaseTest {
             Attach.addVideo(projectConfiguration.getVideoStorageUrl());
         }
     }
-
-
 }
 
-
-//    @BeforeAll
-//    static void beforeAll() {
-//        Configuration.baseUrl = "http://erp-tms.s3-website.eu-central-1.amazonaws.com";
-//        Configuration.browser = "chrome";
-////        Configuration.browserVersion = "100.0";
-//        Configuration.browserSize = "1920x1080";
-//        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
-//
-//        DesiredCapabilities capabilities = new DesiredCapabilities();
-//        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-//                "enableVNC", true,
-//                "enableVideo", true
-//        ));
-//
-//        Configuration.browserCapabilities = capabilities;
-//    }
-//
-//    @BeforeEach
-//    void addListener() {
-//        SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-//    }
-//
-//    @AfterEach
-//    void addAttachments() {
-//        Attach.screenshotAs("Last screenshot");
-//        Attach.pageSource();
-//        Attach.browserConsoleLogs();
-//        Attach.addVideo();
-//        getWebDriver().quit();
-//    }
-
-
-
-
-//    @BeforeEach
-//     void beforeAll() {
-//        Configuration.baseUrl = "http://erp-tms.s3-website.eu-central-1.amazonaws.com";
-//        Configuration.browserSize = "1920x1080";
-//    }
-//
-//    @AfterEach
-//    void afterEach(){
-//        getWebDriver().quit();
-//    }

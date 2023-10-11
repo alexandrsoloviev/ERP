@@ -19,11 +19,7 @@ public class LogInTest extends BaseTest {
     LoginPage loginPage = new LoginPage();
     StudentPage studentPage = new StudentPage();
 
-    @BeforeAll
-    static void configureBaseUrl() {
 
-        Configuration.baseUrl = App.config.webUrl();
-    }
 
 
     @Test
