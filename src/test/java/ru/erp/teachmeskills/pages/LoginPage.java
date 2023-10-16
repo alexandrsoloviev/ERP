@@ -18,7 +18,7 @@ public class LoginPage extends BasePage {
     }
 
     public void setEmailValue(String email) {
-        input.setValueInInput("Ввеasasдите Email",email);
+        input.setValueInInput("Введите Email",email);
     }
 
     public void setPasswordValue(String pass) {
