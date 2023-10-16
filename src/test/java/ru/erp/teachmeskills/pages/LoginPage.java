@@ -14,7 +14,7 @@ public class LoginPage extends BasePage {
     private final SelenideElement authForm = $("form");
 
     public void openLoginPage() {
-        open("/login");
+        open("/loginz");
     }
 
     public void setEmailValue(String email) {
